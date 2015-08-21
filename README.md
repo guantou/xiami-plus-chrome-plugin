@@ -1,0 +1,1 @@
+# xiami-plus-chrome-plugin
