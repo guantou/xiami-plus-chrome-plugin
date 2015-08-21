@@ -6,23 +6,23 @@
 	"homepage_url":"http://www.xiami.com/u/2653771",
 	"permissions": ["contextMenus"],
 	"icons": {
-		"16": "icon16x16.png",
-		"48": "icon48x48.png",
-		"128": "icon128x128.png"
+		"16": "icon/icon16x16.png",
+		"48": "icon/icon48x48.png",
+		"128": "icon/icon128x128.png"
 	},
 	"background": {
-		"scripts":["rightMenuBgScript.js"]
+		"scripts":["bgScript.js"]
 	},
 	"content_scripts":[
 		{
 			"matches":["http://www.xiami.com/play", "http://www.xiami.com/play?*"],
-			"js":["playerContentScript.js"]
+			"js":["contentScripts/playerContentScript.js"]
 		},
 		{
 			"matches":["http://www.xiami.com/search*"],
 			"run_at":"document_end",
-			"js":["jquery-1.11.3.min.js", "searchContentScript.js"],
-			"css":["searchAutoComplate.css"]
+			"js":["lib/jquery-1.11.3.min.js", "contentScripts/searchContentScript.js"],
+			"css":["contentScripts/searchAutoComplate.css"]
 		}
 	],
 	"update_url":"http://xiami-search-right-menu.googlecode.com/svn/update.xml"
