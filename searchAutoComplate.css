@@ -1,0 +1,160 @@
+#xiami_plus_search {
+	display: none;
+	position: absolute;
+	z-index: 9;
+	right: 9px;
+	top: 35px;
+	width:650px;
+	border: 1px solid #ddd \9;
+	box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+	border-radius: 0 0 3px 3px;
+	background: #FFF
+}
+
+#xiami_plus_search table {
+	width: 100%
+}
+
+#xiami_plus_search th {
+	border-right: 1px solid #ededed;
+	text-align: right;
+	width: 60px;
+	vertical-align: top;
+	padding: 5px 0
+}
+
+#xiami_plus_search td {
+	background-color: #fbfbfb;
+	border-top: 1px solid #ededed;
+	padding: 5px 0
+}
+
+#xiami_plus_search li h3,#xiami_plus_search th h3 {
+	color: #888;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 2px 4px 0
+}
+
+#xiami_plus_search td.first,#xiami_plus_search td.view_all {
+	border-top: none
+}
+
+#xiami_plus_search ul {
+	float: left
+}
+
+#xiami_plus_search li {
+	clear: left;
+	float: left
+}
+
+#xiami_plus_search li a {
+	color: #000;
+	display: block;
+	float: left;
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 15px;
+	overflow: hidden;
+	padding: 7px 4px 7px 10px;
+	text-decoration: none;
+	width: 275px;
+	word-wrap: break-word
+}
+
+#xiami_plus_search li a:hover,#xiami_plus_search li.selected a,#xiami_plus_search li.selected a strong,#xiami_plus_search li.selected a small,#xiami_plus_search li.selected a span {
+	background: #5297ff !important;
+	color: #fff !important;
+	text-decoration: none !important
+}
+
+#xiami_plus_search a.artist_result strong.artist {
+	font-size: 13px
+}
+
+#xiami_plus_search a.song_result {
+	padding: 5px 4px 5px 10px
+}
+
+#xiami_plus_search a.artist_result div.img {
+	border: 1px solid #bbb;
+	margin: 0 8px 0 0
+}
+
+#xiami_plus_search a.album_result div.img {
+	background: url("http://img.xiami.net/res/img/default/cd28.png") no-repeat 0 0;
+	height: 30px;
+	margin: 0 8px 0 0;
+	padding: 1px 0 0 3px;
+	width: 30px
+}
+
+#xiami_plus_search a.song_result div.img {
+	border: 1px solid #bbb;
+	margin: 0 8px 0 0
+}
+
+#xiami_plus_search a.album_result div.img img {
+	width: 28px
+}
+
+#xiami_plus_search a.artist_result div.img span,#xiami_plus_search a.song_result div.img span {
+	display: block;
+	height: 30px;
+	overflow: hidden;
+	width: 30px
+}
+
+#xiami_plus_search img,#xiami_plus_search div.img,#xiami_plus_search span.albumCover {
+	float: left
+}
+
+#xiami_plus_search a.artist_result img,#xiami_plus_search a.song_result img,#xiami_plus_search a.user_result img,#xiami_plus_search a.group_result img,#xiami_plus_search a.label_result img {
+	margin: 0 9px 0 0
+}
+
+#xiami_plus_search tr.alt td {
+	background: #f6f6f6
+}
+
+#xiami_plus_search td.first {
+	border-top: 0 none
+}
+
+#xiami_plus_search p.auto_complete_tip {
+	border-left: 1px solid #ededed;
+	color: #aaa;
+	font-size: 12px;
+	line-height: 22px;
+	padding: 0 7px;
+	text-align: right;
+	float: right;
+	width: 275px
+}
+
+#xiami_plus_search td.result_more {
+	border: medium none;
+	line-height: 22px;
+	padding: 5px 0 0;
+	text-align: right
+}
+
+#xiami_plus_search td.result_more li a.top_more {
+	display: block;
+	font-size: 12px;
+	padding: 5px 14px 5px 20px;
+	width: 255px;
+	background: url("data:image/gif;base64,R0lGODlhAwAGAJECAP9mAAAAAP///wAAACH5BAEAAAIALAAAAAADAAYAAAIGhASWu3gFADs=") no-repeat scroll 280px center transparent;
+	position: static
+}
+
+#xiami_plus_search td.result_more li.selected a.top_more {
+	background: url("data:image/gif;base64,R0lGODlhAwAGAJECAP9mAAAAAP///wAAACH5BAEAAAIALAAAAAADAAYAAAIGhASWu3gFADs=") no-repeat scroll 280px center #5297ff;
+	color: #fff
+}
+
+#xiami_plus_search.old {
+	left: 140px;
+	top: 38px
+}
