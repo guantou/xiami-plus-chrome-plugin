@@ -22,7 +22,13 @@
 			"matches":["http://www.xiami.com/search*"],
 			"run_at":"document_end",
 			"js":["lib/jquery-1.11.3.min.js", "contentScripts/searchContentScript.js"],
-			"css":["contentScripts/searchAutoComplate.css"]
+			"css":["contentScripts/search.css"]
+		},
+		{
+			"matches":["http://www.xiami.com/space/lib-*"],
+			"run_at":"document_end",
+			"js":["lib/jquery-1.11.3.min.js", "contentScripts/libContentScript.js"],
+			"css":["contentScripts/lib.css"]
 		}
 	],
 	"update_url":"http://xiami-search-right-menu.googlecode.com/svn/update.xml"

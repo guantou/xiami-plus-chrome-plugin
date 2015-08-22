@@ -5,17 +5,16 @@
 * 爱虾米，爱音乐
 */
 
-//功能：主搜索提示
+//功能：主搜索提示。 most of this code copy from xiami's web js
 
-$('#search_text').submit(function() {
-	if ($('#search_text .keyword').val() == '音乐搜索，找人...' || $('#search_text').val() == '') return false;
+$('.big_search_form').submit(function() {
+	if ($('#search_text').val() == '搜索您感兴趣的专辑/歌曲/艺人' || $('#search_text').val() == '') return false;
 });
 
 var result_count = 0;
 var current_index = -1;
 $('#search_text').bind('input propertychange', function() {
 	var self = $(this);
-	console.log(self.val());
 	if (self.val()) {
 		$.ajax({
 			url: 'http://www.xiami.com/ajax/search-index',
