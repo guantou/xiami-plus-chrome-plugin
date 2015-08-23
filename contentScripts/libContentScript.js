@@ -25,7 +25,9 @@ $(".c265_side").prepend('<div class="c265_side_seek pad20 blank30">'+
 				'</div>');
 
 $('#xiami_plus_search_form').submit(function() {
-	if ($('#xiami_plus_search_key').val() == '歌曲名,专辑名,艺人名,风格' || $('#search_text').val() == '') return false;
+	if ($('#xiami_plus_search_key').val() == '歌曲名,专辑名,艺人名,风格' || $('#xiami_plus_search_key').val() == '') return false;
+	window.location = 'http://www.xiami.com/search?key=我收藏的 '+ $('#xiami_plus_search_key').val();
+	return false;
 });
 
 var result_count = 0;
@@ -130,7 +132,7 @@ function matchSongList(html){
 }
 
 function matchAlbumList(html){
-	
+
 }
 
 function matchArtistList(html){
