@@ -19,7 +19,7 @@ $('#search_text').bind('input propertychange', function() {
 		$.ajax({
 			url: 'http://www.xiami.com/ajax/search-index',
 			data: {'key':self.val()},
-			cache: false,
+			cache: true,
 			success: function(data) {
 				result_count = 0;
 				current_index = -1;
