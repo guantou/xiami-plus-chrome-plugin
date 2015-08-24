@@ -32,9 +32,11 @@ $('#xiami_plus_search_form').submit(function() {
 
 var result_count = 0;
 var current_index = -1;
+var search_key = '';
 $('#xiami_plus_search_key').bind('input propertychange', function() {
 	var self = $(this);
 	if (self.val()) {
+		search_key = self.val();
 		$.ajax({
 			url: 'http://www.xiami.com/search',
 			data: {'key':'我收藏的 '+self.val()},
@@ -48,18 +50,17 @@ $('#xiami_plus_search_key').bind('input propertychange', function() {
 
 				//从搜索页面html提取为需要的列表
 				list_html = '<table cellspacing="0" cellpadding="0" border="0"><tbody>';
-
-				var song_list = matchSongList(resp);
-				list_html += song_list;
-				list_html+= '</tbody></table>';
+				list_html += matchSongList(resp);
+				list_html += matchAlbumList(resp);
+				list_html += matchArtistList(resp);
+				list_html += '</tbody></table>';
 
 				$('#xiami_plus_search_autocomplate').html(list_html);
 				var _trs = $('#xiami_plus_search_autocomplate').find('tr');
 				$('#xiami_plus_search_autocomplate').show();
 			}
 		});
-	}
-	else {
+	} else {
 		$('#xiami_plus_search_autocomplate').hide();
 	}
 });
@@ -132,7 +133,31 @@ function matchSongList(html){
 }
 
 function matchAlbumList(html){
-
+	var list_html = '';
+	var albums = html.match(/<div class=\"album_item100_block\">[\s\S]*?<p class=\"album_rank clearfix\">/gm);
+	window.albums = albums;
+	for (var i = 0; i < albums.length; i++) {
+		var _html = albums[i];
+		var album_info = /<a class=\"song\" href=\"(.*?)\" title=\"(.*?)\"/.exec(_html);
+		if(!album_info) continue;
+		var album_href = album_info[1];
+		var album_title = album_info[2];
+		var album_logo = /<img src=\"(.*?)\"/.exec(_html)[1];
+		var artist_name = /<a class=\"singer\".*?>(.*?)<\/a>/.exec(_html)[1];
+		artist_name = artist_name.replace(/<b class=\"key_red\">(.*?)<\/b>/g, "$1");
+		list_html +=   '<li class="result">'+
+							'<a href="'+album_href+'" title="'+album_title+'" class="album_result" >'+
+								'<span class="albumCover coverSmall">'+
+									'<div class="img">'+
+									'<img width="28" height="28" src="'+album_logo+'">'+
+									'</div>'+
+									'<span class="jewelcase"></span> '+
+								'</span>'+ 
+								'<strong>'+album_title+'</strong><br>'+artist_name+
+							'</a>'+
+						'</li>';
+	}
+	return '<tr><th><h3 class="song">专辑</h3></th><td><ul>'+list_html+'</ul></td></tr>';
 }
 
 function matchArtistList(html){

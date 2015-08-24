@@ -6,6 +6,7 @@
 */
 var gourls = 'http://www.xiami.com/search?key=';
 chrome.contextMenus.create({"title": "下一首", "onclick": playNextSong});
+//单菜单or多菜单，将通过设置项来实现
 //右键菜单同时只能存在一个，否则会变二级分组。这里做减法，只留下一首和划词搜索
 //chrome.contextMenus.create({"title": "暂停/播放", "onclick": playNextSong});
 //chrome.contextMenus.create({"title": "上一首", "onclick": playNextSong});
