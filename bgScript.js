@@ -5,10 +5,12 @@
 * 爱虾米，爱音乐
 */
 var gourls = 'http://www.xiami.com/search?key=';
-var menu = chrome.contextMenus.create({"title": "下一首", "onclick": playNextSong});
-var menu = chrome.contextMenus.create({"title": "暂停/播放", "onclick": playNextSong});
-var menu = chrome.contextMenus.create({"title": "上一首", "onclick": playNextSong});
-var menu = chrome.contextMenus.create({"title": "虾米搜索 "+ "：“ %s ”", "contexts":["selection"], "onclick": search});
+chrome.contextMenus.create({"title": "下一首", "onclick": playNextSong});
+//右键菜单同时只能存在一个，否则会变二级分组。这里做减法，只留下一首和划词搜索
+//chrome.contextMenus.create({"title": "暂停/播放", "onclick": playNextSong});
+//chrome.contextMenus.create({"title": "上一首", "onclick": playNextSong});
+//划词搜索仅在选了文字时才有
+chrome.contextMenus.create({"title": "虾米搜索 "+ "：“ %s ”", "contexts":["selection"], "onclick": search});
 
 //“搜” 方法
 function search(info, tab){
