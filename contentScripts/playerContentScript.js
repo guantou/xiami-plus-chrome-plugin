@@ -18,6 +18,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		case "pauseOrPlay":
 			pauseOrPlay();
 		break;
+		case "like":
+			like();
+		break;
 	}
 });
 
@@ -36,3 +39,10 @@ function pauseOrPlay(){
 	document.getElementById("J_playBtn").click();
 }
 
+//收藏
+function like(){
+	if($("#J_trackFav").attr("title")=="收藏"){
+		document.getElementById("#J_trackFav").like();
+	}
+	return false;
+}

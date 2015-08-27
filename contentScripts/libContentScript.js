@@ -49,12 +49,21 @@ $('#xiami_plus_search_key').bind('input propertychange', function() {
 				}
 
 				//从搜索页面html提取为需要的列表
-				list_html = '<table cellspacing="0" cellpadding="0" border="0"><tbody>';
-				list_html += matchSongList(resp);
-				list_html += matchAlbumList(resp);
-				list_html += matchArtistList(resp);
+				var list_html = '<table cellspacing="0" cellpadding="0" border="0"><tbody>';
+				var path = window.location.pathname;
+				var type = /lib\-(.*)[\?\/]?/.exec(path)[1];
+				switch(type){
+					case "song":
+						list_html += matchSongList(resp);
+					break;
+					case "album":
+						list_html += matchAlbumList(resp);
+					break;
+					case "artist":
+						list_html += matchArtistList(resp);
+					break;
+				}
 				list_html += '</tbody></table>';
-
 				$('#xiami_plus_search_autocomplate').html(list_html);
 				var _trs = $('#xiami_plus_search_autocomplate').find('tr');
 				$('#xiami_plus_search_autocomplate').show();
@@ -127,15 +136,15 @@ function matchSongList(html){
 		var song_name = song_info[2];
 		var artist_name = /<td class=\"song_artist\">[\s\S]*?<a target=\"_blank\" href=\".*?\" title=\".*?\">[\n\s]+?(.*?)<\/a>/.exec(_html)[1];
 		artist_name = artist_name.replace(/<b class=\"key_red\">(.*?)<\/b>/g, "$1");
-		list_html += '<li class="result"><a href="'+song_href+'" title="'+song_name+'" class="song_result" >'+song_name+' - <span>'+artist_name+'</span></a></li>';
+		list_html += '<li class="result"><a href="'+song_href+'" class="song_result" >'+song_name+' - <span>'+artist_name+'</span></a></li>';
 	}
 	return '<tr><th><h3 class="song">歌曲</h3></th><td><ul>'+list_html+'</ul></td></tr>';
 }
 
+//从搜索页面提取专辑列表
 function matchAlbumList(html){
 	var list_html = '';
 	var albums = html.match(/<div class=\"album_item100_block\">[\s\S]*?<p class=\"album_rank clearfix\">/gm);
-	window.albums = albums;
 	for (var i = 0; i < albums.length; i++) {
 		var _html = albums[i];
 		var album_info = /<a class=\"song\" href=\"(.*?)\" title=\"(.*?)\"/.exec(_html);
@@ -146,7 +155,7 @@ function matchAlbumList(html){
 		var artist_name = /<a class=\"singer\".*?>(.*?)<\/a>/.exec(_html)[1];
 		artist_name = artist_name.replace(/<b class=\"key_red\">(.*?)<\/b>/g, "$1");
 		list_html +=   '<li class="result">'+
-							'<a href="'+album_href+'" title="'+album_title+'" class="album_result" >'+
+							'<a href="'+album_href+'" class="album_result" >'+
 								'<span class="albumCover coverSmall">'+
 									'<div class="img">'+
 									'<img width="28" height="28" src="'+album_logo+'">'+
@@ -161,5 +170,25 @@ function matchAlbumList(html){
 }
 
 function matchArtistList(html){
+var list_html = '';
+	var artists = html.match(/<div class=\"artist_item100_block\">[\s\S]*?<b class=\"ico_radio/gm);
+	window.artists = artists;
+	for (var i = 0; i < artists.length; i++) {
+		var _html = artists[i];
 
+		var artist_href = /class=\"artist100\" href=\"(.*?)\"/.exec(_html)[1];
+		if(!artist_href) continue;
+		var artist_logo = /<img\s+src=\"(.*?)\"/.exec(_html)[1];
+		var artist_name = /<strong>([\s\S]*?)<\/strong>/.exec(_html)[1];
+		artist_name = artist_name.replace(/<b class=\"key_red\">(.*?)<\/b>/g, "$1");
+		list_html +=   '<li class="result">'+
+							'<a href="'+artist_href+'" class="artist_result">'+
+								'<div class="img">'+
+									'<span><img width="30" height="30" src="'+artist_logo+'"> </span>'+
+								'</div>'+
+								'<strong class="artist">'+artist_name+'</strong> '+
+							'</a>'+ 
+						'</li>';
+	}
+	return '<tr><th><h3 class="song">艺人</h3></th><td><ul>'+list_html+'</ul></td></tr>';
 }

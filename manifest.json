@@ -25,7 +25,7 @@
 			"css":["contentScripts/search.css"]
 		},
 		{
-			"matches":["http://www.xiami.com/space/lib-*"],
+			"matches":["http://www.xiami.com/space/lib-song*", "http://www.xiami.com/space/lib-album*", "http://www.xiami.com/space/lib-artist*"],
 			"run_at":"document_end",
 			"js":["lib/jquery-1.11.3.min.js", "contentScripts/libContentScript.js"],
 			"css":["contentScripts/lib.css"]
