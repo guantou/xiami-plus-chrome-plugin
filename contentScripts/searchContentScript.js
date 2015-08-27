@@ -13,9 +13,11 @@ $('.big_search_form').submit(function() {
 
 var result_count = 0;
 var current_index = -1;
+var search_key = '';
 $('#search_text').bind('input propertychange', function() {
 	var self = $(this);
 	if (self.val()) {
+		search_key = self.val();
 		$.ajax({
 			url: 'http://www.xiami.com/ajax/search-index',
 			data: {'key':self.val()},
@@ -88,3 +90,12 @@ $('#search_text').keydown(function(e) {
 $('body').click(function() {
 	$('#xiami_plus_search').hide();
 });
+
+//下次点击输入框，自动显示上次提示
+$('#search_text').click(function(){
+	if(search_key && $(this).val() == search_key){
+		$('#xiami_plus_search').show();
+	}
+	event.stopPropagation();
+	return false;
+})

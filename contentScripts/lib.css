@@ -9,13 +9,14 @@
 	display: none;
 	position: absolute;
 	z-index: 9;
-	right: -87px;
-	top: 100px;
-	width:350px;
+	right: -57px;
+	top: 107px;
+	width:300px;
 	border: 1px solid #ddd \9;
 	box-shadow: 0 3px 8px rgba(0,0,0,0.5);
 	border-radius: 0 0 3px 3px;
 	background: #FFF
+	overflow: hidden;
 }
 
 #xiami_plus_search_autocomplate table {

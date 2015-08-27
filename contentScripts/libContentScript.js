@@ -51,7 +51,7 @@ $('#xiami_plus_search_key').bind('input propertychange', function() {
 				//从搜索页面html提取为需要的列表
 				var list_html = '<table cellspacing="0" cellpadding="0" border="0"><tbody>';
 				var path = window.location.pathname;
-				var type = /lib\-(.*)[\?\/]?/.exec(path)[1];
+				var type = /lib\-([^\?\/]*).*/.exec(path)[1];
 				switch(type){
 					case "song":
 						list_html += matchSongList(resp);
@@ -63,6 +63,7 @@ $('#xiami_plus_search_key').bind('input propertychange', function() {
 						list_html += matchArtistList(resp);
 					break;
 				}
+				list_html += '<tr><td><ul><li class="result"><a class="top_more" href="http://www.xiami.com/search?key=我收藏的 '+search_key+'" >更多结果</a></li></ul></td></tr>';
 				list_html += '</tbody></table>';
 				$('#xiami_plus_search_autocomplate').html(list_html);
 				var _trs = $('#xiami_plus_search_autocomplate').find('tr');
@@ -124,6 +125,15 @@ $('body').click(function() {
 	$('#xiami_plus_search_autocomplate').hide();
 });
 
+//下次点击输入框，自动显示上次提示
+$('#xiami_plus_search_key').click(function(){
+	if(search_key && $(this).val() == search_key){
+		$('#xiami_plus_search_autocomplate').show();
+	}
+	event.stopPropagation();
+	return false;
+})
+
 //从搜索页面提取歌曲列表
 function matchSongList(html){
 	var list_html = '';
@@ -138,7 +148,7 @@ function matchSongList(html){
 		artist_name = artist_name.replace(/<b class=\"key_red\">(.*?)<\/b>/g, "$1");
 		list_html += '<li class="result"><a href="'+song_href+'" class="song_result" >'+song_name+' - <span>'+artist_name+'</span></a></li>';
 	}
-	return '<tr><th><h3 class="song">歌曲</h3></th><td><ul>'+list_html+'</ul></td></tr>';
+	return '<tr><td><ul>'+list_html+'</ul></td></tr>';
 }
 
 //从搜索页面提取专辑列表
@@ -166,7 +176,7 @@ function matchAlbumList(html){
 							'</a>'+
 						'</li>';
 	}
-	return '<tr><th><h3 class="song">专辑</h3></th><td><ul>'+list_html+'</ul></td></tr>';
+	return '<tr><td><ul>'+list_html+'</ul></td></tr>';
 }
 
 function matchArtistList(html){
@@ -190,5 +200,5 @@ var list_html = '';
 							'</a>'+ 
 						'</li>';
 	}
-	return '<tr><th><h3 class="song">艺人</h3></th><td><ul>'+list_html+'</ul></td></tr>';
+	return '<tr><td><ul>'+list_html+'</ul></td></tr>';
 }
