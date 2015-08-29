@@ -7,6 +7,7 @@
 
 【v】主搜索页面输入时提示autoComplate
 
-【50%】我的音乐增加“搜索框”, 支持自动提示autoComplate
+【v】我的音乐增加“搜索框”, 支持自动提示autoComplate
 
 保密
+
