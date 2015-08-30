@@ -16,7 +16,7 @@
 	"content_scripts":[
 		{
 			"matches":["http://www.xiami.com/play", "http://www.xiami.com/play?*"],
-			"js":["contentScripts/playerContentScript.js"]
+			"js":["lib/jquery-1.11.3.min.js", "contentScripts/playerContentScript.js"]
 		},
 		{
 			"matches":["http://www.xiami.com/search*"],

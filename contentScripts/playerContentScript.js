@@ -5,7 +5,10 @@
 * 爱虾米，爱音乐
 */
 
-//功能：右键切歌
+//功能：任意网页右键切歌、暂停、收藏
+//功能：新增播放器快捷键:L - 收藏
+
+//功能：任意网页右键切歌、暂停、收藏
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 	console.log(request);
 	switch(request.requestMsg){
@@ -23,6 +26,22 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		break;
 	}
 });
+
+//功能：新增播放器快捷键:L - 收藏
+$(document).keydown(function(e){
+	var tagName = e.target.tagName.toLowerCase();
+	if(tagName != "input" && tagName != "textarea" && tagName != "select"){
+		var code = e.which || e.keyCode ;
+		switch(code){
+			//L键收藏歌曲
+			case 76:
+				like();
+			break;
+		}
+	}
+})
+
+
 
 //下一首
 function playNextSong(){
@@ -42,7 +61,7 @@ function pauseOrPlay(){
 //收藏
 function like(){
 	if($("#J_trackFav").attr("title")=="收藏"){
-		document.getElementById("#J_trackFav").like();
+		document.getElementById("J_trackFav").click();
 	}
 	return false;
 }
