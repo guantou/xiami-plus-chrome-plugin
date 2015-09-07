@@ -10,7 +10,6 @@
 
 //功能：任意网页右键切歌、暂停、收藏
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-	console.log(request);
 	switch(request.requestMsg){
 		case "playNextSong":
 			playNextSong();
