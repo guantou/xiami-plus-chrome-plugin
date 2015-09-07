@@ -69,10 +69,11 @@ function getSongLogo(){
 				if(!is_collect_page){
 					var td_obj = $(".track_list input[type=checkbox][value="+song_id+"]").parent().siblings('.song_name').eq(0)
 					var td_html = td_obj.html();
+					var has_show_zhcn = td_obj.find('.show_zhcn').length > 0;
 					var new_html = '<div style="height: 30px;float: left; display: inline; padding-right: 5px; padding: 5px 5px 5px 0; ">'+
 										'<a href="http://www.xiami.com/song/'+song_id+'" ><img src="'+logo+'" width=30 height=30 /></a>' +
 									'</div>'+
-									'<p style="line-height: 40px;">'+td_html+'</p>'
+									'<p style="'+ (has_show_zhcn ? '' : 'line-height: 40px;') +'">'+td_html+'</p>'
 					td_obj.html(new_html);
 				}else{
 					var td_obj = $(".quote_song_list input[type=checkbox][value="+song_id+"]").parent().siblings('.song_name').eq(0)
