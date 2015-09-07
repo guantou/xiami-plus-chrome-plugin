@@ -4,11 +4,16 @@
 	"version": "2.0",
 	"manifest_version": 2,
 	"homepage_url":"http://www.xiami.com/u/2653771",
-	"permissions": ["contextMenus"],
+	"permissions": ["contextMenus", "storage"],
 	"icons": {
 		"16": "icon/icon16x16.png",
 		"48": "icon/icon48x48.png",
 		"128": "icon/icon128x128.png"
+	},
+  	"options_page": "options.html",
+	"options_ui": {
+		"page": "options.html",
+		"chrome_style": true
 	},
 	"background": {
 		"scripts":["bgScript.js"]
