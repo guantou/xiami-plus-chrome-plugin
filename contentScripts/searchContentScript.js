@@ -2,7 +2,7 @@
 * email: wangguanhappy@gmail.com
 * 微博： http://weibo.com/twtter
 * 虾米： http://www.xiami.com/u/2653771
-* 爱虾米，爱音乐
+* 爱音乐的人不会老
 */
 
 //功能：主搜索提示。 most of this code copy from xiami's web js

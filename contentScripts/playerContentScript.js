@@ -2,7 +2,7 @@
 * email: wangguanhappy@gmail.com
 * 微博： http://weibo.com/twtter
 * 虾米： http://www.xiami.com/u/2653771
-* 爱虾米，爱音乐
+* 爱音乐的人不会老
 */
 
 //功能：任意网页右键切歌、暂停、收藏
