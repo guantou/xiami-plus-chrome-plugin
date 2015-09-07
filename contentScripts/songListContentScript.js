@@ -11,6 +11,10 @@ var t = null;
 
 chrome.storage.sync.get(default_setting_json, function(items){
 	if(items.song_list_show_logo != 1) return false;
+
+	//专辑详情页不用显示歌曲列表封面
+	if(/\/album\/\d+/.test(window.location.href)) return false;
+
 	getSongLogo();
 
 	//处理精选集歌曲列表，歌曲大于50时的多次次加载数据
@@ -68,9 +72,7 @@ function getSongLogo(){
 					var new_html = '<div style="height: 30px;float: left; display: inline; padding-right: 5px; padding: 5px 5px 5px 0; ">'+
 										'<a href="http://www.xiami.com/song/'+song_id+'" ><img src="'+logo+'" width=30 height=30 /></a>' +
 									'</div>'+
-									'<div>'+
-										'<p style="line-height: 40px;">'+td_html+'</p>'+
-									'</div>';
+									'<p style="line-height: 40px;">'+td_html+'</p>'
 					td_obj.html(new_html);
 				}else{
 					var td_obj = $(".quote_song_list input[type=checkbox][value="+song_id+"]").parent().siblings('.song_name').eq(0)
