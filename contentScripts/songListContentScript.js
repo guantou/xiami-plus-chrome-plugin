@@ -8,25 +8,22 @@
 //功能：歌曲列表显示专辑logo, 歌曲列表显示批量推送
 
 var t = null;
-function refreshCollect(){
-	if($(".s_info").length > $(".xp_song_logo").length){
-		getSongLogo();
-		clearInterval(t);
-		console.log(t);
-	}
-}
 
 chrome.storage.sync.get(default_setting_json, function(items){
 	if(items.song_list_show_logo != 1) return false;
 	getSongLogo();
-	$('#loader a').click(function(){
-		t = setInterval("refreshCollect()", 50);
-	});
+
+	//处理精选集歌曲列表，歌曲大于50时的多次次加载数据
+	if($("#loader").length > 0){
+		$('#loader a').click(function(){
+			t = setInterval("refreshCollect()", 50);
+		});
+	}
 });
 
 function getSongLogo(){
-	var track_list = $(".track_list");
-	var collect_list = $(".quote_song_list");
+	var track_list = $(".track_list");//普通歌曲列表
+	var collect_list = $(".quote_song_list");//精选集歌曲列表
 	if(track_list.length == 0 && collect_list.length == 0 ) return false;
 	
 	var is_collect_page = collect_list.length > 0 ? true : false;
@@ -38,6 +35,7 @@ function getSongLogo(){
 		});
 	}else{
 		$(".quote_song_list input[type=checkbox]").each(function(){
+			//防止歌曲大于50时，二次重复渲染
 			if($(this).parent().siblings('.xp_song_logo').length == 0){
 				song_ids.push($(this).val());
 			}
@@ -89,4 +87,11 @@ function getSongLogo(){
 			return false;
 		}
 	});
+}
+
+function refreshCollect(){
+	if($(".s_info").length > $(".xp_song_logo").length){
+		getSongLogo();
+		clearInterval(t);
+	}
 }
