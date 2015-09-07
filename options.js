@@ -1,3 +1,4 @@
+//默认设置项的值
 var default_setting_json = {
 	right_menu:1,
 	hot_key_l:1,
@@ -8,14 +9,31 @@ var default_setting_json = {
 	multi_send_to_app:1
 };
 
+//保存设置
 function saveOptions(){
-	var setting_json = $("#setting_form").serializeArray();
-	chrome.storage.sync.set(setting_json);
+	var setting_json_item = $("#setting_form").serializeArray();
+	var setting_json = {};
+	$.each(setting_json_item, function(i, field){
+		setting_json[field.name] = parseInt(field.value);
+	});
+
+	$.each(default_setting_json, function(key, val){
+		if(setting_json[key] == undefined){
+			console.log(key);
+			setting_json[key] = 0;
+		}
+	});
+
+	chrome.storage.sync.set(setting_json, function(){});
+	$("#status").html("保存成功！");
+	setTimeout(function() {
+      $("#status").html("")
+    }, 500);
 }
 
+//载入设置项的值
 function loadOptions(){
 	chrome.storage.sync.get(default_setting_json, function(items){
-		console.log(items);
 		$.each(default_setting_json, function(key, val){
 			var obj = $("input[name="+key+"][value="+items[key]+"]");
 			obj.attr("checked", true);
@@ -25,6 +43,7 @@ function loadOptions(){
 
 $(document).ready(function(){
 	loadOptions();
+	
 	$("#save").click(function(){
 		saveOptions();
 	})
