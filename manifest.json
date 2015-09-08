@@ -16,23 +16,23 @@
 		"chrome_style": true
 	},
 	"background": {
-		"scripts":["bgScript.js"]
+		"scripts":["default_setting.js", "bgScript.js"]
 	},
 	"content_scripts":[
 		{
 			"matches":["http://www.xiami.com/play", "http://www.xiami.com/play?*"],
-			"js":["lib/jquery-1.11.3.min.js", "contentScripts/playerContentScript.js"]
+			"js":["default_setting.js", "lib/jquery-1.11.3.min.js", "contentScripts/playerContentScript.js"]
 		},
 		{
 			"matches":["http://www.xiami.com/search*"],
 			"run_at":"document_end",
-			"js":["lib/jquery-1.11.3.min.js", "contentScripts/searchContentScript.js"],
+			"js":["default_setting.js", "lib/jquery-1.11.3.min.js", "contentScripts/searchContentScript.js"],
 			"css":["contentScripts/search.css"]
 		},
 		{
 			"matches":["http://www.xiami.com/space/lib-song*", "http://www.xiami.com/space/lib-album*", "http://www.xiami.com/space/lib-artist*"],
 			"run_at":"document_end",
-			"js":["lib/jquery-1.11.3.min.js", "contentScripts/libContentScript.js"],
+			"js":["lib/jquery-1.11.3.min.js", "default_setting.js",  "contentScripts/libContentScript.js"],
 			"css":["contentScripts/lib.css"]
 		}
 	],

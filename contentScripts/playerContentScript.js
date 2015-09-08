@@ -27,20 +27,33 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 	}
 });
 
-//功能：新增播放器快捷键:L - 收藏
-$(document).keydown(function(e){
-	var tagName = e.target.tagName.toLowerCase();
-	if(tagName != "input" && tagName != "textarea" && tagName != "select"){
-		var code = e.which || e.keyCode ;
-		switch(code){
-			//L键收藏歌曲
-			case 76:
-				like();
-			break;
+//功能：播放器快捷键
+chrome.storage.sync.get(default_setting_json, function(items){
+	$(document).keydown(function(e){
+		var tagName = e.target.tagName.toLowerCase();
+		if(tagName != "input" && tagName != "textarea" && tagName != "select"){
+			var code = e.which || e.keyCode ;
+			switch(code){
+				case 74:
+					if(items.hot_key_jk == 1){
+						playNextSong();
+					}
+				break;
+				case 75:
+					if(items.hot_key_jk == 1){
+						playPreSong();
+					}
+				break;
+				//L键收藏歌曲
+				case 76:
+					if(items.hot_key_l == 1){
+						like();
+					}
+				break;
+			}
 		}
-	}
-})
-
+	})
+});
 
 
 //下一首
@@ -58,10 +71,10 @@ function pauseOrPlay(){
 	document.getElementById("J_playBtn").click();
 }
 
-//收藏
+//收藏&取消收藏
 function like(){
-	if($("#J_trackFav").attr("title")=="收藏"){
+	//if($("#J_trackFav").attr("title")=="收藏"){
 		document.getElementById("J_trackFav").click();
-	}
+	//}
 	return false;
 }

@@ -19,12 +19,12 @@ function saveOptions(){
 
 	$.each(default_setting_json, function(key, val){
 		if(setting_json[key] == undefined){
-			console.log(key);
 			setting_json[key] = 0;
 		}
 	});
 
 	chrome.storage.sync.set(setting_json, function(){});
+	chrome.runtime.reload();
 	$("#status").html("保存成功！");
 	setTimeout(function() {
       $("#status").html("")
@@ -46,6 +46,7 @@ $(document).ready(function(){
 	
 	$("#save").click(function(){
 		saveOptions();
+		window.close();
 	})
 
 })
