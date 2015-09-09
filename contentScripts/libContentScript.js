@@ -80,7 +80,7 @@ chrome.storage.sync.get(default_setting_json, function(items){
 			}
 		});
 
-		$('#xiami_plus_search_autocomplate_key').keydown(function(e) {
+		$('#xiami_plus_search_key').keydown(function(e) {
 			// esc
 			if (e.keyCode==27) {
 				$('#xiami_plus_search_autocomplate').hide();
