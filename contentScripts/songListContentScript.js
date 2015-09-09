@@ -12,10 +12,15 @@ var t = null;
 chrome.storage.sync.get(default_setting_json, function(items){
 	if(items.song_list_show_logo != 1) return false;
 
+	getSongLogo();
+
+	
+});
+
+//各种歌曲列表显示歌曲的专辑logo
+function getSongLogo(){
 	//专辑详情页不用显示歌曲列表封面
 	if(/\/album\/\d+/.test(window.location.href)) return false;
-
-	getSongLogo();
 
 	//处理精选集歌曲列表，歌曲大于50时的多次次加载数据
 	if($("#loader").length > 0){
@@ -23,9 +28,8 @@ chrome.storage.sync.get(default_setting_json, function(items){
 			t = setInterval("refreshCollect()", 50);
 		});
 	}
-});
 
-function getSongLogo(){
+
 	var track_list = $(".track_list");//普通歌曲列表
 	var collect_list = $(".quote_song_list");//精选集歌曲列表
 	if(track_list.length == 0 && collect_list.length == 0 ) return false;
@@ -98,3 +102,4 @@ function refreshCollect(){
 		clearInterval(t);
 	}
 }
+

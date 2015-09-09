@@ -36,7 +36,7 @@
 			"css":["contentScripts/lib.css"]
 		},
 		{
-			"matches":["http://www.xiami.com/*"],
+			"matches":["http://www.xiami.com/*", "http://i.xiami.com/*"],
 			"run_at":"document_end",
 			"js":["lib/jquery-1.11.3.min.js", "default_setting.js", "contentScripts/songListContentScript.js"],
 			"css":[]
