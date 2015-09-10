@@ -78,7 +78,7 @@ function getSongLogo(){
 					var new_html = '<div style="height: 30px;float: left; display: inline; padding-right: 5px; padding: 5px 5px 5px 0; ">'+
 										'<a href="http://www.xiami.com/song/'+song_id+'" ><img src="'+logo+'" width=30 height=30 /></a>' +
 									'</div>'+
-									'<p style="'+ (has_show_zhcn ? '' : 'line-height: 40px;height: 40px;') +'">'+td_html+'</p>'
+									'<p style="'+ (has_show_zhcn ? '' : 'line-height: 40px;height: 40px; overflow:hidden;') +'">'+td_html+'</p>'
 					td_objs.html(new_html);
 				}else{
 					var td_obj = $(".quote_song_list input[type=checkbox][value="+song_id+"]").parent().siblings('.song_name').eq(0)

@@ -25,10 +25,7 @@ chrome.storage.sync.get(default_setting_json, function(items){
 //“搜” 方法
 function search(info, tab){
 	var selecter=info["selectionText"];
-	console.log("selecter " + selecter);
 	chrome.tabs.create({"url": gourls+selecter});
-	console.log("info: " + JSON.stringify(info));
-	console.log("tab: " + JSON.stringify(tab));
 }
 
 //下一首
