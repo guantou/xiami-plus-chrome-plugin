@@ -26,11 +26,10 @@ function saveOptions(){
 	chrome.storage.sync.set(setting_json, function(){});
 	chrome.runtime.reload();
 	$("#status").html("保存成功！需要刷新虾米的页面才能生效哦~");
-	setTimeout(function() {
-		$("#status").html("")
-	    window.close();
-    }, 1500);
-	  
+	//setTimeout(function() {
+	//	$("#status").html("")
+	//   window.close();
+    //}, 1500);
 }
 
 //载入设置项的值

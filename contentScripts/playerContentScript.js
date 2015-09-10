@@ -10,6 +10,7 @@
 
 //功能：任意网页右键切歌、暂停、收藏
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+	console.log(request.requestMsg);
 	switch(request.requestMsg){
 		case "playNextSong":
 			playNextSong();
@@ -24,6 +25,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 			like();
 		break;
 	}
+	
 });
 
 //功能：播放器快捷键
@@ -72,8 +74,15 @@ function pauseOrPlay(){
 
 //收藏&取消收藏
 function like(){
-	//if($("#J_trackFav").attr("title")=="收藏"){
+	if($("#J_trackFav").attr("title")=="收藏"){
 		document.getElementById("J_trackFav").click();
-	//}
+	}
+	
+	//播放器标签名显示操作反馈
+	var title = document.title;	
+	document.title = '收藏成功';
+	setTimeout(function(){
+		document.title = title;
+	}, 600);
 	return false;
 }

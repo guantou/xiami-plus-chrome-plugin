@@ -13,8 +13,8 @@ chrome.storage.sync.get(default_setting_json, function(items){
 		chrome.contextMenus.create({"title": "下一首", "onclick": playNextSong});
 	}else{
 		chrome.contextMenus.create({"title": "下一首", "onclick": playNextSong});
-		chrome.contextMenus.create({"title": "暂停/播放", "onclick": playNextSong});
-		chrome.contextMenus.create({"title": "上一首", "onclick": playNextSong});
+		chrome.contextMenus.create({"title": "暂停/播放", "onclick": pauseOrPlay});
+		chrome.contextMenus.create({"title": "上一首", "onclick": playPreSong});
 		chrome.contextMenus.create({"title": "收藏歌曲", "onclick": like});
 	}
 
@@ -39,8 +39,8 @@ function playPreSong(){
 }
 
 //暂停播放
-function playPreSong(){
-	playerDo("playPreSong");
+function pauseOrPlay(){
+	playerDo("pauseOrPlay");
 }
 
 //收藏

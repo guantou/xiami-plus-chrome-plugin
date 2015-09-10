@@ -97,6 +97,7 @@ function getSongLogo(){
 	});
 }
 
+//超过50首，点击精选集的加载更多时，展示新载入的歌曲的logo
 function refreshCollect(){
 	if($(".s_info").length > $(".xp_song_logo").length){
 		getSongLogo();
@@ -104,6 +105,7 @@ function refreshCollect(){
 	}
 }
 
+//批量推送歌曲到app
 function multiSendToApp(){
 	//查找歌曲列表
 	var track_list = $(".track_list");//普通歌曲列表
@@ -112,8 +114,7 @@ function multiSendToApp(){
 	var is_collect_page = collect_list.length > 0 ? true : false;
 	var list_obj = is_collect_page ? collect_list : track_list;
 
-	var track_list_btn = '<a class="bt_choose" style="margin-left: 10px;" href="javascript:void(0);" title="批量发送" id="xm_plus_multi_send" ><span>批量发送</span></a>';
-	var collect_list_btn = '<a class="bt_play" href="javascript:void(0);" title="批量发送" id="xm_plus_multi_send" ><span>批量发送</span></a>';
+	var track_list_btn = '<a class="bt_choose" style="margin-left: 10px;" href="javascript:void(0);" title="批量发送" id="xm_plus_multi_send" ><span>批量发送</span></a><span id="xm_plus_multi_send_notice" style="line-height: 20px;padding-left: 5px;  color: red;"></span>';
 
 	//增加批量推送按钮
 	$(".ctrl_gears").after(track_list_btn);
@@ -127,8 +128,37 @@ function multiSendToApp(){
 		});
 
 		//触发第一首选择歌曲的“发送到”选项弹层，为后面的铺路
-		document.getElementById("track_"+song_ids[0]).getElementsByClassName("song_tel")[0].click();
+		if(is_collect_page){
+			var tel_btn_list = document.getElementsByClassName('quote_song_list')[0].getElementsByClassName("song_tel");
+		}else{
+			var tel_btn_list = document.getElementsByClassName('track_list')[0].getElementsByClassName("song_tel");
+		}
+		for (var i=0;i<tel_btn_list.length;i++){
+			var reg =new RegExp("\/music\/send\/id\/"+song_ids[0]);
+			if(reg.test(tel_btn_list[i].getAttribute("onclick"))){
+				tel_btn_list[i].click();
+				break;
+			}
+		}
 
 		//获取选项，发送
+		$(document).on("click", "#tag_btn", function(){
+			var device_id = $("input[type='radio'][name='device']:checked").val();
+			if(!device_id) return false;
+			
+			var send_count = 1;
+			var multi_send_notice = $("#xm_plus_multi_send_notice");
+			song_ids.shift();
+			$.each(song_ids, function(i, song_id){
+				$.get("/music/getsend",{id:song_id, deviceid:device_id, vip_role:2},function(data){
+					send_count++;
+					multi_send_notice.html("已发送:"+send_count+"首")
+				});
+			});
+			multi_send_notice.html("发送完成，共"+send_count+"首");
+			setTimeout(function() {
+				multi_send_notice.html("")
+			}, 3000);
+		})
 	});
 }
