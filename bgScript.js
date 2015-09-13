@@ -7,7 +7,6 @@
 var gourls = 'http://www.xiami.com/search?key=';
 
 chrome.storage.sync.get(default_setting_json, function(items){
-	console.log(items);
 	//右键菜单同时只能存在一个，否则会变二级分组。这里做减法，默认只留下一首，除非用户开启
 	if(items.right_menu ==  1){
 		chrome.contextMenus.create({"title": "下一首", "onclick": playNextSong});
