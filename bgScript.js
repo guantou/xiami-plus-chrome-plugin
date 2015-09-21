@@ -57,11 +57,6 @@ function playerDo(actionName){
 		}
 		chrome.tabs.sendRequest(tabs[0].id, {requestMsg: actionName}, function(response) {
 			console.log(response);
-			showNotice(response.responseMsg)
 		});
 	});
-}
-
-function showNotice(msg){
-	alert(msg);
 }
