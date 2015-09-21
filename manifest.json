@@ -1,6 +1,6 @@
 {
 	"name": "虾米优化插件",
-	"description": "虾米优化插件",
+	"description": "针对虾米网页做各种体验优化",
 	"version": "2.0",
 	"manifest_version": 2,
 	"homepage_url":"http://2happy.sinaapp.com/xiami-plus-chrome-plugin/readme.html",
@@ -42,5 +42,5 @@
 			"css":[]
 		}
 	],
-	"update_url":"http://xiami-search-right-menu.googlecode.com/svn/update.xml"
+	"update_url":"http://clients2.google.com/service/update2/crx"
 }
