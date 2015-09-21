@@ -3,7 +3,7 @@
 	"description": "虾米优化插件",
 	"version": "2.0",
 	"manifest_version": 2,
-	"homepage_url":"http://www.xiami.com/u/2653771",
+	"homepage_url":"http://2happy.sinaapp.com/xiami-plus-chrome-plugin/readme.html",
 	"permissions": ["contextMenus", "storage"],
 	"icons": {
 		"16": "icon/icon16x16.png",
