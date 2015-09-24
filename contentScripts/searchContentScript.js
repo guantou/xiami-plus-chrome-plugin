@@ -35,6 +35,7 @@ chrome.storage.sync.get(default_setting_json, function(items){
 					_trs.eq(0).remove();
 					_trs.last().remove();
 					$('#xiami_plus_search').show();
+					$('.more_cols_left').css({'min-height':'800px'});
 				}
 			});
 		}
