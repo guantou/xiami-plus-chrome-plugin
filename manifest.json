@@ -4,7 +4,7 @@
 	"version": "2.1",
 	"manifest_version": 2,
 	"homepage_url":"http://2happy.sinaapp.com/xiami-plus-chrome-plugin/readme.html",
-	"permissions": ["contextMenus", "storage"],
+	"permissions": ["tabs", "contextMenus", "storage", "*://*.xiami.com/*", "*://g.tbcdn.cn/*", "*://ting.weibo.com/*", "*://*.music.126.net/*", "webRequest","webRequestBlocking"],
 	"icons": {
 		"16": "icon/icon16x16.png",
 		"48": "icon/icon48x48.png",
@@ -16,9 +16,16 @@
 		"chrome_style": true
 	},
 	"background": {
-		"scripts":["default_setting.js", "bgScript.js"]
+		"scripts":["default_setting.js", "lib/jquery-1.11.3.min.js", "bgScript.js"]
 	},
+    "web_accessible_resources":["execScripts/XiamiGlobalAndInit.js"],
 	"content_scripts":[
+        {
+            "matches":["http://www.xiami.com/song/*"],
+            "run_at":"document_end",
+            "js":["lib/jquery-1.11.3.min.js", "default_setting.js", "contentScripts/songContentScript.js"],
+            "css":[]
+        },
 		{
 			"matches":["http://www.xiami.com/play", "http://www.xiami.com/play?*"],
 			"js":["default_setting.js", "lib/jquery-1.11.3.min.js", "contentScripts/playerContentScript.js"]

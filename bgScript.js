@@ -60,3 +60,62 @@ function playerDo(actionName){
 		});
 	});
 }
+
+
+//是否来自虾米播放器
+function isFromXiamiPlayer(url){
+    return /^http:\/\/www\.xiami\.com\/play/.test(url);
+}
+
+//替换虾米的播放器js，调用做过修改的js
+//thanks xiamini https://chrome.google.com/webstore/detail/xiamini-%E8%99%BE%E7%B1%B3%E4%BD%A0/kojgbciegmddffhelhohhmgbkelfpojg?spm=0.0.0.0.Hjtuyi&hl=zh-CN
+chrome.webRequest.onBeforeRequest.addListener(
+    function(details) {
+        return {redirectUrl: chrome.extension.getURL('execScripts/XiamiGlobalAndInit.js')};
+    },
+    {
+        urls: [
+            "http://g.tbcdn.cn/de/*/??common/global-min.js,pages/index/page/init-min.js"
+        ],
+        types: ["script"]
+    },
+    ["blocking"]
+);
+
+//下架歌曲-站外匹配，伪造请求头信息
+chrome.webRequest.onBeforeSendHeaders.addListener(function (detail) {
+        var newHeaders = [];
+        var isXiamiPlayerRefer = true;
+        for (var i = 0; i < detail.requestHeaders.length; ++i) {
+            if (detail.requestHeaders[i].name === 'Referer') {
+                if(!isFromXiamiPlayer(detail.requestHeaders[i].value)){
+                    isXiamiPlayerRefer = false;
+                    break;
+                }
+
+                detail.requestHeaders[i].value = 'http://ting.weibo.com';
+            }
+            if (detail.requestHeaders[i].name === 'Cookie') {
+                detail.requestHeaders[i].value = '';
+            }
+
+            if (detail.requestHeaders[i].name === 'X-Requested-With') {
+                detail.requestHeaders[i].value = ''
+            }
+            newHeaders.push(detail.requestHeaders[i]);
+        }
+
+        if(!isXiamiPlayerRefer){
+            return {
+                requestHeaders : detail.requestHeaders
+            };
+        }
+        return {
+            requestHeaders : newHeaders
+        };
+    },
+    {
+        urls: ["*://ting.weibo.com/*", "*://*.music.126.net/*"]
+    },
+    ["blocking", "requestHeaders"]
+);
