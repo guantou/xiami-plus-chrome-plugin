@@ -60,6 +60,7 @@ window.XiamiPlus = {
 		//				"is_like":false,
 		//				"copy":"",
 		//				"sell_url":"",
+        //			    "lyric_info": "",
 		//				"photo":"http:\/\/mu1.sinaimg.cn\/square.180\/weiyinyue.music.sina.com.cn\/wpp_cover\/336614.jpg",
 		//				"source_name":"\u867e\u7c73\u97f3\u4e50",
 		//				"source_img":"http:\/\/image2.sina.com.cn\/music\/web\/ting2013\/frontend\/xiami.gif",
@@ -73,8 +74,7 @@ window.XiamiPlus = {
 		//		]
 		//}
 
-
-		$.getJSON("http://ting.weibo.com/page/playlist/searchList?key="+song.name+' '+song.artist_name+"&callback=?", function(json){
+		$.getJSON("http://ting.weibo.com/page/playlist/searchList?key="+this.htmlDecode(song.name)+' '+this.htmlDecode(song.artist_name)+"&callback=?", function(json){
 			var matchedSongIndex = 0;
 			var maxMatchPercent = 0;
 			$.each(json.data, function(i, wb_song){
@@ -153,8 +153,19 @@ window.XiamiPlus = {
 			trackList.push(trackSong);
 			callback(trackList);
 		});
-	}
+	},
 
+	"htmlDecode" : function (str){
+		var s = "";
+        if(str.length == 0) return "";
+        s = str.replace(/&amp;/g,"&");
+        s = s.replace(/&lt;/g,"<");
+        s = s.replace(/&gt;/g,">");
+        s = s.replace(/&nbsp;/g," ");
+        s = s.replace(/&#039;/g,"\'");
+        s = s.replace(/&quot;/g,"\"");
+        return s;
+	}
 };
 
 
