@@ -74,7 +74,7 @@ window.XiamiPlus = {
 		//}
 
 
-		$.getJSON("http://ting.weibo.com/page/playlist/searchList?key="+song.name+"&callback=?", function(json){
+		$.getJSON("http://ting.weibo.com/page/playlist/searchList?key="+song.name+' '+song.artist_name+"&callback=?", function(json){
 			var matchedSongIndex = 0;
 			var maxMatchPercent = 0;
 			$.each(json.data, function(i, wb_song){
@@ -105,7 +105,7 @@ window.XiamiPlus = {
 			//	"album_name": "咆哮2002", 
 			//	"object_id": "9169", 
 			//	"object_name": "default", 
-			//	"insert_type": 1, 
+			//	"insert_type": 1, //加入列表的顺序
 			//	"background": "http://img.xiami.net/res/player/bimg/bg-5.jpg", 
 			//	"grade": -1, 
 			//	"artist": "迪克牛仔", 
@@ -131,7 +131,7 @@ window.XiamiPlus = {
 					"album_name": song.album_name, 
 					"object_id": song.song_id, 
 					"object_name": "default", 
-					"insert_type": 1, 
+					"insert_type": 2, 
 					"background": "http://img.xiami.net/res/player/bimg/bg-5.jpg", 
 					"grade": -1, 
 					"artist": song.artist_name, 
