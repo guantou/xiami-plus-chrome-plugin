@@ -4,12 +4,40 @@ window.XiamiPlus = {
         console.log('get url:' + url);
 
         //单曲 http://www.xiami.com/play?ids=/song/playlist/id/2096292/object_name/default/object_id/0
-        if(!trackList && /^\/song\/playlist\/id\/\d+\//.test(url)){
+        if(!trackList && /^\/song\/playlist\/id\/\d+\/object_name\/default\/object_id\/0/.test(url)){
+			console.log('is single song ');
             var song_id = /^\/song\/playlist\/id\/(\d+)\//.exec(url)[1];
             this.fetchSongInfo(song_id, callback);
         }
 
-        //多单曲 /song/playlist/id/2096292%2C2096290%2C2096281%2C2096283
+        //多单曲 /song/playlist/id/1557428%2C1557430%2C1557433/object_name/default/object_id/0
+		if(/^\/song\/playlist\/id\/\d+%2C[\d%2C]+\/object_name\/default\/object_id\/0/.test(url)){
+			console.log('is multiy song ');
+            var song_ids = /^\/song\/playlist\/id\/([%2C\d]+)\//.exec(url)[1].split("%2C");
+			if(!song_ids || song_ids == undefined) song_ids = [];
+			var songLoss = [];
+
+			song_ids = $.map(song_ids, function(n){
+			  return parseInt(n);
+			});
+
+			console.log('url song_ids:', song_ids);
+			var lossCount = 0;
+			for(var i=0;i<song_ids.length;i++){
+				var isLoss = true;
+				for(var j=0;j<trackList.length;j++){
+					if(song_ids[i] == trackList[j]['song_id']) {
+						isLoss = false;
+						break;
+					}
+				}
+				if(isLoss){
+					console.log('loss song_id:', song_ids[i]);
+					lossCount++;
+					this.fetchSongInfo(song_ids[i], callback);
+				}
+			}
+        }
 
         //专辑 /song/playlist/id/169768/type/1
 
@@ -75,83 +103,103 @@ window.XiamiPlus = {
 		//}
 
 		$.getJSON("http://ting.weibo.com/page/playlist/searchList?key="+this.htmlDecode(song.name)+' '+this.htmlDecode(song.artist_name)+"&callback=?", function(json){
-			var matchedSongIndex = 0;
+			console.log('get weibo songs:', json);
+
+			var matchedSongIndex = -1;
 			var maxMatchPercent = 0;
-			$.each(json.data, function(i, wb_song){
+			for(var i=0; i<json.data.length; i++){
+				var wb_song = json.data[i];
+				if(wb_song.mp3_url == undefined || wb_song.mp3_url == "" ) continue;
+				if(wb_song.songname.indexOf(song.name) != 0) continue;
+
 				var matchPercent = 0;
 
 				//匹配歌名
-				if(wb_song.songname.indexOf(song.song_name) != -1 ){
-
-					//匹配演唱者
-					if(song.singerStr){
-						for(var i=0; i<wb_song.singers; i++){
-							if(wb_song.singers[i].indexOf(song.singerStr) != -1) matchPercent++;
-						}
+				var wb_singers = [];
+				//匹配演唱者
+				if(song.singerStr){
+					for(var j=0; j<wb_song.singers.length; j++){
+						if(wb_song.singers[i].singer_name.indexOf(song.singerStr) != -1) matchPercent++;
+						wb_singers.push(wb_song.singers[i].singer_name);
 					}
 				}
 
-				if(matchPercent > maxMatchPercent) matchedSongIndex = i;
-			});
+				if(wb_singers.length == 0) continue;
+
+				if((wb_song.songname == song.name && song.singerStr == wb_singers.join(';'))
+					||
+					(wb_song.songname == song.name+'-'+song.artist_name && song.singerStr == wb_singers.join(';'))
+				){
+					matchPercent = 100;
+				}
+				if(matchPercent > maxMatchPercent) {
+					maxMatchPercent = matchPercent;
+					matchedSongIndex = i;
+				}
+			}
+
+			if(matchedSongIndex == -1) return false;
 
 			var wb_song = json.data[matchedSongIndex];
-			console.log('fetched song from weibo:', wb_song);
+			if(wb_song != undefined && wb_song.mp3_url != undefined){
+				console.log('fetched song from weibo:', wb_song, ' index', matchedSongIndex);
 
-			//tracklist
-			//{
-			//	"title": "爱我的人和我爱的人", 
-			//	"song_id": "9169", 
-			//	"album_id": "759", 
-			//	"album_name": "咆哮2002", 
-			//	"object_id": "9169", 
-			//	"object_name": "default", 
-			//	"insert_type": 1, //加入列表的顺序
-			//	"background": "http://img.xiami.net/res/player/bimg/bg-5.jpg", 
-			//	"grade": -1, 
-			//	"artist": "迪克牛仔", 
-			//	"aritst_type": "", 
-			//	"artist_url": "http://www.xiami.com/artist/184", 
-			//	"location": "9hFlc%795p_97%6-%Elt%eo25_E3kaa5515-t2.mF915%e68Ea4E%pFx%1%743yd1df485%mi282%4F%6c4e9%E35aF4F5_a3%4bb15-A.m1%9EluD5%c5%En%fi8213.t3E5685%u2i.4F6%mh28Eb3E5l", 
-			//	"ms": null, 
-			//	"lyric": "http://img.xiami.net/lyric/184/759/9169.lrc", 
-			//	"lyric_url": "http://img.xiami.net/lyric/184/759/9169.lrc", 
-			//	"pic": "http://img.xiami.net/images/album/img84/184/7591393826386_1.jpg", 
-			//	"album_pic": "http://img.xiami.net/images/album/img84/184/7591393826386.jpg", 
-			//	"length": 277, 
-			//	"tryhq": 0, 
-			//	"artist_id": "184", 
-			//	"rec_note": "", 
-			//	"music_type": "0"
-			//}
-			
-			var trackSong = {
-					"title": song.name, 
-					"song_id": song.song_id, 
-					"album_id": song.album_id, 
-					"album_name": song.album_name, 
-					"object_id": song.song_id, 
-					"object_name": "default", 
-					"insert_type": 2, 
-					"background": "http://img.xiami.net/res/player/bimg/bg-5.jpg", 
-					"grade": -1, 
-					"artist": song.artist_name, 
-					"aritst_type": "", 
-					"artist_url": "http://www.xiami.com/artist/"+song.artist_id, 
-					"location": wb_song.mp3_url, 
-					"ms": "", 
-					"lyric": "", 
-					"lyric_url": "", 
-					"pic": song.album_logo, 
-					"album_pic": song.album_logo, 
-					"length": wb_song.play_length, 
-					"tryhq": 0, 
-					"artist_id": song.artist_id, 
-					"rec_note": "", 
-					"music_type": "0"
-			};
-			var trackList = [];
-			trackList.push(trackSong);
-			callback(trackList);
+				//tracklist
+				//{
+				//	"title": "爱我的人和我爱的人", 
+				//	"song_id": "9169", 
+				//	"album_id": "759", 
+				//	"album_name": "咆哮2002", 
+				//	"object_id": "9169", 
+				//	"object_name": "default", 
+				//	"insert_type": 1, //加入列表的顺序
+				//	"background": "http://img.xiami.net/res/player/bimg/bg-5.jpg", 
+				//	"grade": -1, 
+				//	"artist": "迪克牛仔", 
+				//	"aritst_type": "", 
+				//	"artist_url": "http://www.xiami.com/artist/184", 
+				//	"location": "9hFlc%795p_97%6-%Elt%eo25_E3kaa5515-t2.mF915%e68Ea4E%pFx%1%743yd1df485%mi282%4F%6c4e9%E35aF4F5_a3%4bb15-A.m1%9EluD5%c5%En%fi8213.t3E5685%u2i.4F6%mh28Eb3E5l", 
+				//	"ms": null, 
+				//	"lyric": "http://img.xiami.net/lyric/184/759/9169.lrc", 
+				//	"lyric_url": "http://img.xiami.net/lyric/184/759/9169.lrc", 
+				//	"pic": "http://img.xiami.net/images/album/img84/184/7591393826386_1.jpg", 
+				//	"album_pic": "http://img.xiami.net/images/album/img84/184/7591393826386.jpg", 
+				//	"length": 277, 
+				//	"tryhq": 0, 
+				//	"artist_id": "184", 
+				//	"rec_note": "", 
+				//	"music_type": "0"
+				//}
+				
+				var trackSong = {
+						"title": song.name, 
+						"song_id": song.song_id, 
+						"album_id": song.album_id, 
+						"album_name": song.album_name, 
+						"object_id": song.song_id, 
+						"object_name": "default", 
+						"insert_type": 1, 
+						"background": "http://img.xiami.net/res/player/bimg/bg-5.jpg", 
+						"grade": -1, 
+						"artist": song.artist_name, 
+						"aritst_type": "", 
+						"artist_url": "http://www.xiami.com/artist/"+song.artist_id, 
+						"location": wb_song.mp3_url, 
+						"ms": "", 
+						"lyric": "", 
+						"lyric_url": "", 
+						"pic": song.album_logo, 
+						"album_pic": song.album_logo, 
+						"length": wb_song.play_length, 
+						"tryhq": 0, 
+						"artist_id": song.artist_id, 
+						"rec_note": "", 
+						"music_type": "0"
+				};
+				var trackList = [];
+				trackList.push(trackSong);
+				callback(trackList);
+			}
 		});
 	},
 

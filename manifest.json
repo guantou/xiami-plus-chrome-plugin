@@ -26,6 +26,12 @@
             "js":["lib/jquery-1.11.3.min.js", "default_setting.js", "contentScripts/songContentScript.js"],
             "css":[]
         },
+        {
+            "matches":["http://www.xiami.com/album/*"],
+            "run_at":"document_end",
+            "js":["lib/jquery-1.11.3.min.js", "default_setting.js", "contentScripts/albumContentScript.js"],
+            "css":[]
+        },
 		{
 			"matches":["http://www.xiami.com/play", "http://www.xiami.com/play?*"],
 			"js":["default_setting.js", "lib/jquery-1.11.3.min.js", "contentScripts/playerContentScript.js"]
