@@ -1,14 +1,14 @@
 # 虾米小助手浏览器插件
 针对虾米网(xiami.com)做各种功能体验优化扩展
 
-##安装：
+## 安装：
 支持谷歌Chrome浏览器，360安全浏览器（急速浏览器），猎豹，搜狗，百度等浏览器的极速模式
 
 安装地址：[chrome官方应用市场](https://chrome.google.com/webstore/detail/%E8%99%BE%E7%B1%B3%E5%B0%8F%E5%8A%A9%E6%89%8B/mchgobbccmadhfjfpejaemobpoefloll/related?hl=zh-CN")（国内无法访问）， 
 或手动保存后拖入浏览器里安装[xiami-plus-chrome-plugin_2.1.crx](http://2happy.sinaapp.com/xiami-plus-chrome-plugin/xiami-plus-chrome-plugin_2.1.crx)
 
-##意见反馈：
-[虾米主页](http://www.xiami.com/u/2653771) , [微博](http://weibo.com/twtter) , [Github](https://github.com/guantou/xiami-plus-chrome-plugin)
+## 意见反馈：
+[虾米主页](http://www.xiami.com/u/2653771)  , [Github](https://github.com/guantou/xiami-plus-chrome-plugin)
 
 * * *
 ##歌曲列表、精选集歌曲列表封面模式
